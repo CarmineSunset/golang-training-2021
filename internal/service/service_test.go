@@ -1,26 +1,41 @@
 package service_test
 
 import (
-	"testing"
+	// "testing"
 
 
+	"github.com/andreipimenov/golang-training-2021/internal/service"
+	"github.com/andreipimenov/golang-training-2021/internal/mock"
+
+
+	
 	"github.com/stretchr/testify/suite"
 	"github.com/rs/zerolog"
 )
 
 type serviceTestSuite struct {
 	suite.Suite
-	service Service
+	service *service.Service
+	repo *mock.Repository 
+	client *mock.HTTPClient
+
 }
+
 
 
 func (suite *serviceTestSuite) SetupTest() {
-    logger := zerolog.New(os.Stdout).With().Timestamp().Logger()
-	repo := &mock.Repository{}
-	client := &mock.HTTPClient{}
-}
-
-
-func TestSetup(t *testing.T) {
+	suite.repo = &mock.Repository{}
+	suite.client = &mock.HTTPClient{}
+	suite.service =  service.New(&zerolog.Logger{}, suite.repo, "Token doesn't exist", suite.client)
 	
+    
 }
+
+
+
+
+
+// func TestSetup(t *testing.T) {
+	
+// }
+

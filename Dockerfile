@@ -1,8 +1,9 @@
 FROM golang:1.16
 
 WORKDIR /workdir
-ADD . .
+ADD go.mod go.sum ./
 RUN go mod download
+ADD . .
 RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o bin/app cmd/*.go
 
 EXPOSE 8080
