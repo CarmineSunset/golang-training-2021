@@ -3,7 +3,7 @@ package service_test
 import (
 	"testing"
 	"time"
-	"fmt"
+	// "fmt"
 
 
 	"github.com/andreipimenov/golang-training-2021/internal/service"
@@ -48,30 +48,24 @@ func TestService(t *testing.T) {
 
 
 func (suite *serviceTestSuite) TestServiceValid() {
-	price := &model.Price{
+	price := model.Price{
 		Open:  "99.9",
 		High:  "99.9",
 		Low:   "99.9",
 		Close: "99.9",
 	}
 
-	d, err := time.Parse("2021-07-26", date)
-	key := fmt.Sprintf("%s_%s", ticker, d)
+	d, err := time.Parse("2006-01-02", date)
+	key := "AAPL_2021-07-26"
 	suite.NoError(err)
+	
 	
 	suite.repo.On("Load", key).Once().Return(price, true)
 	res, err := suite.service.GetPrice(ticker, d)
 	suite.NoError(err)
-	suite.Equal(res, price)
+	suite.Equal(res, &price)
 
 
 }
 
-
-
-
-
-// func TestSetup(t *testing.T) {
-	
-// }
 
